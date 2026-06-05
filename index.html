@@ -10,18 +10,19 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   html, body {
-    height: 100%;
+    min-height: 100%;
     background: #060f0c;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-family: 'Space Grotesk', sans-serif;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem 3rem;
   }
 
+  /* ── COUNTDOWN ── */
   .wrap {
     position: relative;
-    width: min(560px, 96vw);
+    width: min(560px, 100%);
     background: #0d1f1a;
     border: 0.5px solid #1d5e40;
     border-radius: 20px;
@@ -30,6 +31,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 2rem;
   }
 
   canvas {
@@ -67,6 +69,8 @@
     display: flex;
     gap: 10px;
     margin-bottom: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .block {
@@ -75,12 +79,12 @@
     border-radius: 12px;
     padding: 14px 18px 10px;
     text-align: center;
-    min-width: 74px;
+    min-width: 70px;
   }
 
   .bnum {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(2.4rem, 7vw, 3.4rem);
+    font-size: clamp(2.2rem, 6vw, 3.2rem);
     line-height: 1;
     color: #7dd3a8;
     display: block;
@@ -128,7 +132,7 @@
     position: relative;
     z-index: 2;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     color: #7dd3a8;
     letter-spacing: 4px;
     text-align: center;
@@ -136,7 +140,164 @@
     margin-bottom: 2rem;
   }
 
-  @media (max-width: 420px) {
+  /* ── TODO ── */
+  .todo-wrap {
+    width: min(1100px, 100%);
+  }
+
+  .todo-header {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    color: #4a9970;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .sync-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #1d9e75;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .sync-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    color: #2d6e50;
+    letter-spacing: 1px;
+  }
+
+  .days-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+
+  .day-card {
+    background: #0d1f1a;
+    border: 0.5px solid #1d5e40;
+    border-radius: 14px;
+    padding: 14px 14px 12px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .day-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 0.5px solid #1d5e40;
+  }
+
+  .day-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.15rem;
+    letter-spacing: 2px;
+    color: #7dd3a8;
+  }
+
+  .day-date {
+    font-size: 10px;
+    color: #4a9970;
+    letter-spacing: 1px;
+  }
+
+  .items-list {
+    flex: 1;
+    min-height: 40px;
+  }
+
+  .todo-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 7px 0;
+    border-bottom: 0.5px solid rgba(29, 94, 64, 0.25);
+    font-size: 12px;
+    color: #9fe1cb;
+    line-height: 1.4;
+  }
+
+  .todo-item:last-child { border-bottom: none; }
+
+  .bullet {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    border: 1px solid #1d9e75;
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  .item-text { flex: 1; word-break: break-word; }
+
+  .del-btn {
+    background: none;
+    border: none;
+    color: #1d5e40;
+    cursor: pointer;
+    font-size: 13px;
+    padding: 0 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: color 0.15s;
+  }
+  .del-btn:hover { color: #7dd3a8; }
+
+  .empty-msg {
+    font-size: 11px;
+    color: #2d6e50;
+    padding: 6px 0;
+    font-style: italic;
+  }
+
+  .add-row {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .add-input {
+    flex: 1;
+    background: rgba(29, 94, 64, 0.12);
+    border: 0.5px solid #1d5e40;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 12px;
+    color: #7dd3a8;
+    font-family: 'Space Grotesk', sans-serif;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .add-input::placeholder { color: #2d6e50; }
+  .add-input:focus { border-color: #1d9e75; }
+
+  .add-btn {
+    background: transparent;
+    border: 0.5px solid #1d9e75;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 14px;
+    color: #7dd3a8;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+    transition: background 0.15s;
+  }
+  .add-btn:hover { background: rgba(29, 158, 117, 0.15); }
+
+  @media (max-width: 480px) {
     .block { min-width: 58px; padding: 10px 10px 8px; }
     .blocks { gap: 6px; }
     .sep { font-size: 2rem; margin-top: 10px; }
@@ -145,12 +306,11 @@
 </head>
 <body>
 
+<!-- COUNTDOWN -->
 <div class="wrap" id="wrap">
   <canvas id="cv"></canvas>
-
   <p class="eyebrow">🚴 Départ dans</p>
   <p class="park-name">Parc de la Mauricie</p>
-
   <div class="blocks" id="blocks">
     <div class="block"><span class="bnum" id="dd">--</span><span class="blbl">jours</span></div>
     <div class="sep">:</div>
@@ -160,9 +320,7 @@
     <div class="sep">:</div>
     <div class="block"><span class="bnum" id="ss">--</span><span class="blbl">sec</span></div>
   </div>
-
   <p class="gone" id="gone">C'est le départ ! 🚴</p>
-
   <div class="pills">
     <span class="pill">400+ km</span>
     <span class="pill">4 jours · 3 nuits</span>
@@ -170,185 +328,227 @@
   </div>
 </div>
 
-<script>
-(function () {
-  const canvas = document.getElementById('cv');
-  const ctx = canvas.getContext('2d');
-  const wrap = document.getElementById('wrap');
+<!-- TODO -->
+<div class="todo-wrap">
+  <div class="todo-header">
+    <div class="sync-dot"></div>
+    À voir &amp; à faire
+    <span class="sync-label">synchronisé en temps réel</span>
+  </div>
+  <div class="days-grid" id="days-grid">
+    <!-- injecté par JS -->
+  </div>
+</div>
 
-  function resize() {
-    canvas.width = wrap.offsetWidth;
-    canvas.height = wrap.offsetHeight;
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getDatabase, ref, push, remove, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBr_65HKReheZjXFD2j6Z-l6qBO-e8j5xk",
+    authDomain: "geomartinos.firebaseapp.com",
+    databaseURL: "https://geomartinos-default-rtdb.firebaseio.com",
+    projectId: "geomartinos",
+    storageBucket: "geomartinos.firebasestorage.app",
+    messagingSenderId: "650847823987",
+    appId: "1:650847823987:web:f15ae6f836b0c5d94b2206"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  const DAYS = [
+    { key: "jour1", label: "Jour 1", date: "11 juin" },
+    { key: "jour2", label: "Jour 2", date: "12 juin" },
+    { key: "jour3", label: "Jour 3", date: "13 juin" },
+    { key: "jour4", label: "Jour 4", date: "14 juin" },
+  ];
+
+  const grid = document.getElementById("days-grid");
+
+  DAYS.forEach(day => {
+    const card = document.createElement("div");
+    card.className = "day-card";
+    card.innerHTML = `
+      <div class="day-head">
+        <span class="day-title">${day.label}</span>
+        <span class="day-date">${day.date}</span>
+      </div>
+      <div class="items-list" id="list-${day.key}">
+        <p class="empty-msg">Aucun item pour l'instant...</p>
+      </div>
+      <div class="add-row">
+        <input class="add-input" id="input-${day.key}" placeholder="Ajouter un item..." type="text"/>
+        <button class="add-btn" id="btn-${day.key}">+</button>
+      </div>
+    `;
+    grid.appendChild(card);
+
+    const dayRef = ref(db, `mauricie2026/${day.key}`);
+
+    onValue(dayRef, snapshot => {
+      const listEl = document.getElementById(`list-${day.key}`);
+      listEl.innerHTML = "";
+      const data = snapshot.val();
+      if (!data) {
+        listEl.innerHTML = `<p class="empty-msg">Aucun item pour l'instant...</p>`;
+        return;
+      }
+      Object.entries(data).forEach(([id, item]) => {
+        const div = document.createElement("div");
+        div.className = "todo-item";
+        div.innerHTML = `
+          <div class="bullet"></div>
+          <span class="item-text">${escapeHtml(item.text)}</span>
+          <button class="del-btn" title="Supprimer">✕</button>
+        `;
+        div.querySelector(".del-btn").addEventListener("click", () => {
+          remove(ref(db, `mauricie2026/${day.key}/${id}`));
+        });
+        listEl.appendChild(div);
+      });
+    });
+
+    function addItem() {
+      const input = document.getElementById(`input-${day.key}`);
+      const text = input.value.trim();
+      if (!text) return;
+      push(ref(db, `mauricie2026/${day.key}`), { text });
+      input.value = "";
+    }
+
+    document.getElementById(`btn-${day.key}`).addEventListener("click", addItem);
+    document.getElementById(`input-${day.key}`).addEventListener("keydown", e => {
+      if (e.key === "Enter") addItem();
+    });
+  });
+
+  function escapeHtml(str) {
+    return str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
   }
+
+  // ── COUNTDOWN ──
+  const target = new Date("2026-06-11T06:00:00");
+  const pad = n => String(Math.max(0, n)).padStart(2, "0");
+  function tick() {
+    const diff = target - new Date();
+    if (diff <= 0) {
+      document.getElementById("blocks").style.display = "none";
+      document.getElementById("gone").style.display = "block";
+      return;
+    }
+    document.getElementById("dd").textContent = pad(Math.floor(diff / 86400000));
+    document.getElementById("hh").textContent = pad(Math.floor((diff % 86400000) / 3600000));
+    document.getElementById("mm").textContent = pad(Math.floor((diff % 3600000) / 60000));
+    document.getElementById("ss").textContent = pad(Math.floor((diff % 60000) / 1000));
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // ── TOPO CANVAS ──
+  const canvas = document.getElementById("cv");
+  const ctx = canvas.getContext("2d");
+  const wrapEl = document.getElementById("wrap");
+  function resize() { canvas.width = wrapEl.offsetWidth; canvas.height = wrapEl.offsetHeight; }
   resize();
-  window.addEventListener('resize', resize);
-
-  const W = () => canvas.width;
-  const H = () => canvas.height;
-
+  window.addEventListener("resize", resize);
+  const W = () => canvas.width, H = () => canvas.height;
   const GW = 80, GH = 50;
   const field = new Float32Array(GW * GH);
 
   function noise2d(x, y) {
-    return Math.sin(x * 1.3) * Math.cos(y * 0.9)
-         + Math.sin(x * 2.7) * Math.cos(y * 2.1) * 0.5
-         + Math.sin(x * 5.1) * Math.cos(y * 4.3) * 0.25
-         + Math.sin(x * 0.6) * Math.cos(y * 0.4) * 0.8
-         + Math.sin(x * 3.8) * Math.cos(y * 3.2) * 0.15;
+    return Math.sin(x*1.3)*Math.cos(y*0.9)
+         + Math.sin(x*2.7)*Math.cos(y*2.1)*0.5
+         + Math.sin(x*5.1)*Math.cos(y*4.3)*0.25
+         + Math.sin(x*0.6)*Math.cos(y*0.4)*0.8
+         + Math.sin(x*3.8)*Math.cos(y*3.2)*0.15;
   }
 
   function buildField(t) {
-    for (let yi = 0; yi < GH; yi++) {
-      for (let xi = 0; xi < GW; xi++) {
-        const nx = xi / GW * 4;
-        const ny = yi / GH * 3;
-        field[yi * GW + xi] = noise2d(nx + t * 0.05, ny);
-      }
-    }
+    for (let yi = 0; yi < GH; yi++)
+      for (let xi = 0; xi < GW; xi++)
+        field[yi*GW+xi] = noise2d(xi/GW*4 + t*0.05, yi/GH*3);
   }
 
-  function val(xi, yi) {
-    return field[yi * GW + xi] ?? 0;
-  }
+  function valF(xi, yi) { return field[yi*GW+xi] ?? 0; }
 
   function marchingSquares(threshold) {
     const segs = [];
-    for (let yi = 0; yi < GH - 1; yi++) {
-      for (let xi = 0; xi < GW - 1; xi++) {
-        const tl = val(xi,     yi)     > threshold ? 1 : 0;
-        const tr = val(xi + 1, yi)     > threshold ? 1 : 0;
-        const br = val(xi + 1, yi + 1) > threshold ? 1 : 0;
-        const bl = val(xi,     yi + 1) > threshold ? 1 : 0;
-        const code = tl * 8 + tr * 4 + br * 2 + bl * 1;
-        if (code === 0 || code === 15) continue;
-
-        function interp(ax, ay, bx, by) {
-          const a = val(ax, ay), b = val(bx, by);
-          const frac = (b === a) ? 0.5 : (threshold - a) / (b - a);
-          return [ax + (bx - ax) * frac, ay + (by - ay) * frac];
+    for (let yi = 0; yi < GH-1; yi++) {
+      for (let xi = 0; xi < GW-1; xi++) {
+        const tl = valF(xi,yi)>threshold?1:0, tr = valF(xi+1,yi)>threshold?1:0;
+        const br = valF(xi+1,yi+1)>threshold?1:0, bl = valF(xi,yi+1)>threshold?1:0;
+        if (tl+tr+br+bl===0||tl+tr+br+bl===4) continue;
+        function interp(ax,ay,bx,by) {
+          const a=valF(ax,ay),b=valF(bx,by),f=b===a?0.5:(threshold-a)/(b-a);
+          return [ax+(bx-ax)*f, ay+(by-ay)*f];
         }
-
-        const edges = [];
-        if (tl !== tr) edges.push(interp(xi, yi, xi + 1, yi));
-        if (tr !== br) edges.push(interp(xi + 1, yi, xi + 1, yi + 1));
-        if (bl !== br) edges.push(interp(xi, yi + 1, xi + 1, yi + 1));
-        if (tl !== bl) edges.push(interp(xi, yi, xi, yi + 1));
-        if (edges.length >= 2) segs.push([edges[0], edges[1]]);
+        const edges=[];
+        if(tl!==tr) edges.push(interp(xi,yi,xi+1,yi));
+        if(tr!==br) edges.push(interp(xi+1,yi,xi+1,yi+1));
+        if(bl!==br) edges.push(interp(xi,yi+1,xi+1,yi+1));
+        if(tl!==bl) edges.push(interp(xi,yi,xi,yi+1));
+        if(edges.length>=2) segs.push([edges[0],edges[1]]);
       }
     }
     return segs;
   }
 
-  function gc(xi, yi) {
-    return [xi / GW * W(), yi / GH * H()];
-  }
-
-  const levels = [
-    { v: -1.4, lw: 1.8, alpha: 0.22 },
-    { v: -1.0, lw: 1.0, alpha: 0.16 },
-    { v: -0.6, lw: 1.0, alpha: 0.15 },
-    { v: -0.2, lw: 1.0, alpha: 0.14 },
-    { v:  0.2, lw: 1.0, alpha: 0.13 },
-    { v:  0.6, lw: 1.0, alpha: 0.12 },
-    { v:  1.0, lw: 1.8, alpha: 0.20 },
-    { v:  1.4, lw: 1.0, alpha: 0.11 },
-    { v:  1.7, lw: 1.0, alpha: 0.09 },
+  const levels=[
+    {v:-1.4,lw:1.8,alpha:0.22},{v:-1.0,lw:1.0,alpha:0.16},{v:-0.6,lw:1.0,alpha:0.15},
+    {v:-0.2,lw:1.0,alpha:0.14},{v:0.2,lw:1.0,alpha:0.13},{v:0.6,lw:1.0,alpha:0.12},
+    {v:1.0,lw:1.8,alpha:0.20},{v:1.4,lw:1.0,alpha:0.11},{v:1.7,lw:1.0,alpha:0.09},
   ];
 
   let bikeX = -70;
 
   function bikeTrackY(x, t) {
-    return H() * 0.72 + Math.sin(x / W() * Math.PI * 2.5 + t * 0.4) * H() * 0.06;
+    return H()*0.72 + Math.sin(x/W()*Math.PI*2.5 + t*0.4)*H()*0.06;
   }
 
   function drawBike(x, y, angle) {
-    ctx.save();
-    ctx.translate(x, y);
-    ctx.rotate(angle);
-    const s = 19;
-    ctx.strokeStyle = '#7dd3a8';
-    ctx.lineWidth = 1.6;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-
-    ctx.beginPath(); ctx.arc(-s * .56, s * .32, s * .30, 0, Math.PI * 2); ctx.stroke();
-    ctx.beginPath(); ctx.arc( s * .56, s * .32, s * .30, 0, Math.PI * 2); ctx.stroke();
-
-    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(-s * .56, s * .32); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(-s * .22, -s * .28); ctx.lineTo(-s * .56, s * .32); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(s * .30, -s * .22); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(s * .30, -s * .22); ctx.lineTo(s * .56, s * .32); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(-s * .22, -s * .28); ctx.lineTo(s * .30, -s * .22); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(-s * .22, -s * .28); ctx.lineTo(0, 0); ctx.stroke();
-
-    ctx.beginPath(); ctx.moveTo(-s * .22, -s * .28); ctx.lineTo(-s * .22, -s * .46); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(-s * .40, -s * .48); ctx.lineTo(-s * .05, -s * .48); ctx.stroke();
-
-    ctx.beginPath(); ctx.moveTo(s * .30, -s * .22); ctx.lineTo(s * .30, -s * .42); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(s * .16, -s * .44); ctx.lineTo(s * .44, -s * .40); ctx.stroke();
-
+    ctx.save(); ctx.translate(x,y); ctx.rotate(angle);
+    const s=19; ctx.strokeStyle="#7dd3a8"; ctx.lineWidth=1.6; ctx.lineCap="round"; ctx.lineJoin="round";
+    ctx.beginPath(); ctx.arc(-s*.56,s*.32,s*.30,0,Math.PI*2); ctx.stroke();
+    ctx.beginPath(); ctx.arc( s*.56,s*.32,s*.30,0,Math.PI*2); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-s*.56,s*.32); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-s*.22,-s*.28); ctx.lineTo(-s*.56,s*.32); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(s*.30,-s*.22); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(s*.30,-s*.22); ctx.lineTo(s*.56,s*.32); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-s*.22,-s*.28); ctx.lineTo(s*.30,-s*.22); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-s*.22,-s*.28); ctx.lineTo(0,0); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-s*.22,-s*.28); ctx.lineTo(-s*.22,-s*.46); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-s*.40,-s*.48); ctx.lineTo(-s*.05,-s*.48); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(s*.30,-s*.22); ctx.lineTo(s*.30,-s*.42); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(s*.16,-s*.44); ctx.lineTo(s*.44,-s*.40); ctx.stroke();
     ctx.restore();
   }
 
   let animT = 0;
-
   function draw(ts) {
     animT = ts * 0.001;
-    ctx.clearRect(0, 0, W(), H());
-
+    ctx.clearRect(0,0,W(),H());
     buildField(animT);
-
-    levels.forEach(({ v, lw, alpha }) => {
+    levels.forEach(({v,lw,alpha}) => {
       const segs = marchingSquares(v);
       ctx.strokeStyle = `rgba(29,158,117,${alpha})`;
-      ctx.lineWidth = lw;
-      ctx.lineCap = 'round';
-      segs.forEach(([p0, p1]) => {
-        const [x0, y0] = gc(p0[0], p0[1]);
-        const [x1, y1] = gc(p1[0], p1[1]);
-        ctx.beginPath();
-        ctx.moveTo(x0, y0);
-        ctx.lineTo(x1, y1);
-        ctx.stroke();
+      ctx.lineWidth = lw; ctx.lineCap = "round";
+      segs.forEach(([p0,p1]) => {
+        const x0=p0[0]/GW*W(), y0=p0[1]/GH*H();
+        const x1=p1[0]/GW*W(), y1=p1[1]/GH*H();
+        ctx.beginPath(); ctx.moveTo(x0,y0); ctx.lineTo(x1,y1); ctx.stroke();
       });
     });
-
     bikeX += 0.6;
-    if (bikeX > W() + 80) bikeX = -70;
-
+    if (bikeX > W()+80) bikeX = -70;
     const by = bikeTrackY(bikeX, animT);
     const dx = 6;
-    const y1 = bikeTrackY(bikeX - dx, animT);
-    const y2 = bikeTrackY(bikeX + dx, animT);
-    const angle = Math.atan2(y2 - y1, dx * 2);
-
-    drawBike(bikeX, by - 16, angle);
-
+    const angle = Math.atan2(bikeTrackY(bikeX+dx,animT)-bikeTrackY(bikeX-dx,animT), dx*2);
+    drawBike(bikeX, by-16, angle);
     requestAnimationFrame(draw);
   }
-
   requestAnimationFrame(draw);
-
-  // Countdown
-  const target = new Date('2026-06-11T06:00:00');
-  const pad = n => String(Math.max(0, n)).padStart(2, '0');
-
-  function tick() {
-    const diff = target - new Date();
-    if (diff <= 0) {
-      document.getElementById('blocks').style.display = 'none';
-      document.getElementById('gone').style.display = 'block';
-      return;
-    }
-    document.getElementById('dd').textContent = pad(Math.floor(diff / 86400000));
-    document.getElementById('hh').textContent = pad(Math.floor((diff % 86400000) / 3600000));
-    document.getElementById('mm').textContent = pad(Math.floor((diff % 3600000) / 60000));
-    document.getElementById('ss').textContent = pad(Math.floor((diff % 60000) / 1000));
-  }
-
-  tick();
-  setInterval(tick, 1000);
-})();
 </script>
 </body>
 </html>
