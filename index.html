@@ -13,131 +13,114 @@
     min-height: 100%;
     background: #060f0c;
     font-family: 'Space Grotesk', sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem 1rem 3rem;
   }
 
-  .panels {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    width: 100%;
-    max-width: 1160px;
-  }
-
-  .wrap {
-    position: relative;
-    flex: 1 1 min(500px, 100%);
-    max-width: 540px;
-    background: #0d1f1a;
-    border: 0.5px solid #1d5e40;
-    border-radius: 20px;
-    overflow: hidden;
-    padding: 3rem 2rem 2.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  canvas {
-    position: absolute;
+  /* Full-page topo canvas */
+  #bg-canvas {
+    position: fixed;
     inset: 0;
     width: 100%;
     height: 100%;
     pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 2rem 1rem 3rem;
+    min-height: 100vh;
+    justify-content: center;
+  }
+
+  .wrap {
+    width: min(520px, 100%);
+    background: rgba(13, 31, 26, 0.72);
+    border: 0.5px solid #1d5e40;
+    border-radius: 20px;
+    backdrop-filter: blur(2px);
+    padding: 2rem 1.5rem 1.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .eyebrow {
-    position: relative;
-    z-index: 2;
     font-size: 11px;
     letter-spacing: 3px;
     text-transform: uppercase;
     color: #4a9970;
-    margin-bottom: 0.4rem;
-  }
-
-  .rider-name {
-    position: relative;
-    z-index: 2;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(1.1rem, 3vw, 1.4rem);
-    letter-spacing: 4px;
-    color: #2d8a60;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.35rem;
     text-align: center;
-    text-transform: uppercase;
   }
 
   .park-name {
-    position: relative;
-    z-index: 2;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(1.8rem, 5vw, 2.6rem);
+    font-size: clamp(1.8rem, 7vw, 2.6rem);
     letter-spacing: 5px;
     color: #7dd3a8;
-    margin-bottom: 2rem;
+    margin-bottom: 1.6rem;
     text-align: center;
+    line-height: 1.1;
   }
 
   .blocks {
-    position: relative;
-    z-index: 2;
     display: flex;
-    gap: 10px;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    gap: 8px;
+    margin-bottom: 1.4rem;
+    align-items: flex-start;
+    width: 100%;
     justify-content: center;
   }
 
   .block {
-    background: rgba(6, 15, 12, 0.78);
+    background: rgba(6, 15, 12, 0.80);
     border: 0.5px solid #1d9e75;
     border-radius: 12px;
-    padding: 14px 18px 10px;
+    padding: 12px 14px 9px;
     text-align: center;
-    min-width: 70px;
+    flex: 1 1 0;
+    min-width: 0;
   }
 
   .bnum {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(2.2rem, 6vw, 3.2rem);
+    font-size: clamp(2rem, 8vw, 3.2rem);
     line-height: 1;
     color: #7dd3a8;
     display: block;
   }
 
   .blbl {
-    font-size: 9px;
+    font-size: clamp(7px, 2vw, 9px);
     color: #4a9970;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
     margin-top: 4px;
     display: block;
+    white-space: nowrap;
   }
 
   .sep {
-    position: relative;
-    z-index: 2;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.8rem;
+    font-size: clamp(1.6rem, 6vw, 2.8rem);
     color: #1d9e75;
     align-self: flex-start;
-    margin-top: 14px;
+    margin-top: clamp(10px, 2vw, 14px);
     user-select: none;
+    flex-shrink: 0;
   }
 
   .pills {
-    position: relative;
-    z-index: 2;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 8px;
+    gap: 7px;
   }
 
   .pill {
@@ -150,33 +133,26 @@
   }
 
   .gone {
-    position: relative;
-    z-index: 2;
     font-family: 'Bebas Neue', sans-serif;
     font-size: 2.2rem;
     color: #7dd3a8;
     letter-spacing: 4px;
     text-align: center;
     display: none;
-    margin-bottom: 2rem;
-  }
-
-  @media (max-width: 480px) {
-    .block { min-width: 58px; padding: 10px 10px 8px; }
-    .blocks { gap: 6px; }
-    .sep { font-size: 2rem; margin-top: 10px; }
+    margin-bottom: 1.4rem;
   }
 </style>
 </head>
 <body>
 
-<div class="panels">
+<!-- Full-page background canvas -->
+<canvas id="bg-canvas"></canvas>
 
-  <!-- PANNEAU 1 — Geo (Limoilou) -->
+<div class="page">
+
+  <!-- PANNEAU 1 — Martin (Limoilou) -->
   <div class="wrap" id="wrap1">
-    <canvas id="cv1"></canvas>
-    <p class="eyebrow">🚴 Départ dans</p>
-    <p class="rider-name">Martin</p>
+    <p class="eyebrow">🚴 Départ de Martin dans</p>
     <p class="park-name">Limoilou → Val-d'Or</p>
     <div class="blocks" id="blocks1">
       <div class="block"><span class="bnum" id="dd1">--</span><span class="blbl">jours</span></div>
@@ -195,11 +171,9 @@
     </div>
   </div>
 
-  <!-- PANNEAU 2 — Neveu (Longueuil) -->
+  <!-- PANNEAU 2 — Camil (Longueuil) -->
   <div class="wrap" id="wrap2">
-    <canvas id="cv2"></canvas>
-    <p class="eyebrow">🚴 Départ dans</p>
-    <p class="rider-name">Camil</p>
+    <p class="eyebrow">🚴 Départ de Camil dans</p>
     <p class="park-name">Longueuil → Val-d'Or</p>
     <div class="blocks" id="blocks2">
       <div class="block"><span class="bnum" id="dd2">--</span><span class="blbl">jours</span></div>
@@ -223,12 +197,10 @@
 <script>
   // ── COUNTDOWN ──
   const countdowns = [
-    { target: new Date("2026-06-25T06:00:00"), dd: "dd1", hh: "hh1", mm: "mm1", ss: "ss1", blocks: "blocks1", gone: "gone1" },
-    { target: new Date("2026-06-27T06:00:00"), dd: "dd2", hh: "hh2", mm: "mm2", ss: "ss2", blocks: "blocks2", gone: "gone2" },
+    { target: new Date("2026-06-25T06:00:00"), dd:"dd1", hh:"hh1", mm:"mm1", ss:"ss1", blocks:"blocks1", gone:"gone1" },
+    { target: new Date("2026-06-27T06:00:00"), dd:"dd2", hh:"hh2", mm:"mm2", ss:"ss2", blocks:"blocks2", gone:"gone2" },
   ];
-
   const pad = n => String(Math.max(0, n)).padStart(2, "0");
-
   function tick() {
     const now = new Date();
     countdowns.forEach(({ target, dd, hh, mm, ss, blocks, gone }) => {
@@ -247,8 +219,17 @@
   tick();
   setInterval(tick, 1000);
 
-  // ── TOPO CANVAS (one instance per panel) ──
-  const GW = 80, GH = 50;
+  // ── FULL-PAGE TOPO CANVAS ──
+  const canvas = document.getElementById("bg-canvas");
+  const ctx = canvas.getContext("2d");
+  const GW = 100, GH = 60;
+  const field = new Float32Array(GW * GH);
+
+  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener("resize", resize);
+
+  const W = () => canvas.width, H = () => canvas.height;
 
   function noise2d(x, y) {
     return Math.sin(x*1.3)*Math.cos(y*0.9)
@@ -258,105 +239,89 @@
          + Math.sin(x*3.8)*Math.cos(y*3.2)*0.15;
   }
 
-  const levels = [
-    {v:-1.4,lw:1.8,alpha:0.22},{v:-1.0,lw:1.0,alpha:0.16},{v:-0.6,lw:1.0,alpha:0.15},
-    {v:-0.2,lw:1.0,alpha:0.14},{v:0.2,lw:1.0,alpha:0.13},{v:0.6,lw:1.0,alpha:0.12},
-    {v:1.0,lw:1.8,alpha:0.20},{v:1.4,lw:1.0,alpha:0.11},{v:1.7,lw:1.0,alpha:0.09},
-  ];
-
-  function initPanel(canvasId, wrapId, bikeOffset) {
-    const canvas = document.getElementById(canvasId);
-    const wrapEl = document.getElementById(wrapId);
-    const ctx = canvas.getContext("2d");
-    const field = new Float32Array(GW * GH);
-
-    function resize() { canvas.width = wrapEl.offsetWidth; canvas.height = wrapEl.offsetHeight; }
-    resize();
-    window.addEventListener("resize", resize);
-
-    const W = () => canvas.width, H = () => canvas.height;
-
-    function buildField(t) {
-      for (let yi = 0; yi < GH; yi++)
-        for (let xi = 0; xi < GW; xi++)
-          field[yi*GW+xi] = noise2d(xi/GW*4 + t*0.05, yi/GH*3);
-    }
-
-    function valF(xi, yi) { return field[yi*GW+xi] ?? 0; }
-
-    function marchingSquares(threshold) {
-      const segs = [];
-      for (let yi = 0; yi < GH-1; yi++) {
-        for (let xi = 0; xi < GW-1; xi++) {
-          const tl = valF(xi,yi)>threshold?1:0, tr = valF(xi+1,yi)>threshold?1:0;
-          const br = valF(xi+1,yi+1)>threshold?1:0, bl = valF(xi,yi+1)>threshold?1:0;
-          if (tl+tr+br+bl===0||tl+tr+br+bl===4) continue;
-          function interp(ax,ay,bx,by) {
-            const a=valF(ax,ay),b=valF(bx,by),f=b===a?0.5:(threshold-a)/(b-a);
-            return [ax+(bx-ax)*f, ay+(by-ay)*f];
-          }
-          const edges=[];
-          if(tl!==tr) edges.push(interp(xi,yi,xi+1,yi));
-          if(tr!==br) edges.push(interp(xi+1,yi,xi+1,yi+1));
-          if(bl!==br) edges.push(interp(xi,yi+1,xi+1,yi+1));
-          if(tl!==bl) edges.push(interp(xi,yi,xi,yi+1));
-          if(edges.length>=2) segs.push([edges[0],edges[1]]);
-        }
-      }
-      return segs;
-    }
-
-    function bikeTrackY(x, t) {
-      return H()*0.72 + Math.sin(x/W()*Math.PI*2.5 + t*0.4)*H()*0.06;
-    }
-
-    function drawBike(x, y, angle) {
-      ctx.save(); ctx.translate(x,y); ctx.rotate(angle);
-      const s=19; ctx.strokeStyle="#7dd3a8"; ctx.lineWidth=1.6; ctx.lineCap="round"; ctx.lineJoin="round";
-      ctx.beginPath(); ctx.arc(-s*.56,s*.32,s*.30,0,Math.PI*2); ctx.stroke();
-      ctx.beginPath(); ctx.arc( s*.56,s*.32,s*.30,0,Math.PI*2); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-s*.56,s*.32); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(-s*.22,-s*.28); ctx.lineTo(-s*.56,s*.32); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(s*.30,-s*.22); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(s*.30,-s*.22); ctx.lineTo(s*.56,s*.32); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(-s*.22,-s*.28); ctx.lineTo(s*.30,-s*.22); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(-s*.22,-s*.28); ctx.lineTo(0,0); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(-s*.22,-s*.28); ctx.lineTo(-s*.22,-s*.46); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(-s*.40,-s*.48); ctx.lineTo(-s*.05,-s*.48); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(s*.30,-s*.22); ctx.lineTo(s*.30,-s*.42); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(s*.16,-s*.44); ctx.lineTo(s*.44,-s*.40); ctx.stroke();
-      ctx.restore();
-    }
-
-    let bikeX = bikeOffset;
-
-    function draw(ts) {
-      const t = ts * 0.001;
-      ctx.clearRect(0,0,W(),H());
-      buildField(t);
-      levels.forEach(({v,lw,alpha}) => {
-        const segs = marchingSquares(v);
-        ctx.strokeStyle = `rgba(29,158,117,${alpha})`;
-        ctx.lineWidth = lw; ctx.lineCap = "round";
-        segs.forEach(([p0,p1]) => {
-          const x0=p0[0]/GW*W(), y0=p0[1]/GH*H();
-          const x1=p1[0]/GW*W(), y1=p1[1]/GH*H();
-          ctx.beginPath(); ctx.moveTo(x0,y0); ctx.lineTo(x1,y1); ctx.stroke();
-        });
-      });
-      bikeX += 0.6;
-      if (bikeX > W()+80) bikeX = -70;
-      const by = bikeTrackY(bikeX, t);
-      const dx = 6;
-      const angle = Math.atan2(bikeTrackY(bikeX+dx,t)-bikeTrackY(bikeX-dx,t), dx*2);
-      drawBike(bikeX, by-16, angle);
-      requestAnimationFrame(draw);
-    }
-    requestAnimationFrame(draw);
+  function buildField(t) {
+    for (let yi = 0; yi < GH; yi++)
+      for (let xi = 0; xi < GW; xi++)
+        field[yi*GW+xi] = noise2d(xi/GW*4 + t*0.05, yi/GH*3);
   }
 
-  initPanel("cv1", "wrap1", -70);
-  initPanel("cv2", "wrap2", -200);
+  function valF(xi, yi) { return field[yi*GW+xi] ?? 0; }
+
+  function marchingSquares(threshold) {
+    const segs = [];
+    for (let yi = 0; yi < GH-1; yi++) {
+      for (let xi = 0; xi < GW-1; xi++) {
+        const tl=valF(xi,yi)>threshold?1:0, tr=valF(xi+1,yi)>threshold?1:0;
+        const br=valF(xi+1,yi+1)>threshold?1:0, bl=valF(xi,yi+1)>threshold?1:0;
+        if (tl+tr+br+bl===0||tl+tr+br+bl===4) continue;
+        function interp(ax,ay,bx,by) {
+          const a=valF(ax,ay),b=valF(bx,by),f=b===a?0.5:(threshold-a)/(b-a);
+          return [ax+(bx-ax)*f, ay+(by-ay)*f];
+        }
+        const edges=[];
+        if(tl!==tr) edges.push(interp(xi,yi,xi+1,yi));
+        if(tr!==br) edges.push(interp(xi+1,yi,xi+1,yi+1));
+        if(bl!==br) edges.push(interp(xi,yi+1,xi+1,yi+1));
+        if(tl!==bl) edges.push(interp(xi,yi,xi,yi+1));
+        if(edges.length>=2) segs.push([edges[0],edges[1]]);
+      }
+    }
+    return segs;
+  }
+
+  const levels = [
+    {v:-1.4,lw:1.8,alpha:0.28},{v:-1.0,lw:1.0,alpha:0.20},{v:-0.6,lw:1.0,alpha:0.18},
+    {v:-0.2,lw:1.0,alpha:0.16},{v:0.2,lw:1.0,alpha:0.15},{v:0.6,lw:1.0,alpha:0.14},
+    {v:1.0,lw:1.8,alpha:0.24},{v:1.4,lw:1.0,alpha:0.13},{v:1.7,lw:1.0,alpha:0.11},
+  ];
+
+  function bikeTrackY(x, t) {
+    return H()*0.72 + Math.sin(x/W()*Math.PI*2.5 + t*0.4)*H()*0.06;
+  }
+
+  function drawBike(x, y, angle) {
+    ctx.save(); ctx.translate(x,y); ctx.rotate(angle);
+    const s=19; ctx.strokeStyle="#7dd3a8"; ctx.lineWidth=1.6; ctx.lineCap="round"; ctx.lineJoin="round";
+    ctx.beginPath(); ctx.arc(-s*.56,s*.32,s*.30,0,Math.PI*2); ctx.stroke();
+    ctx.beginPath(); ctx.arc( s*.56,s*.32,s*.30,0,Math.PI*2); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-s*.56,s*.32); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-s*.22,-s*.28); ctx.lineTo(-s*.56,s*.32); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(s*.30,-s*.22); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(s*.30,-s*.22); ctx.lineTo(s*.56,s*.32); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-s*.22,-s*.28); ctx.lineTo(s*.30,-s*.22); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-s*.22,-s*.28); ctx.lineTo(0,0); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-s*.22,-s*.28); ctx.lineTo(-s*.22,-s*.46); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-s*.40,-s*.48); ctx.lineTo(-s*.05,-s*.48); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(s*.30,-s*.22); ctx.lineTo(s*.30,-s*.42); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(s*.16,-s*.44); ctx.lineTo(s*.44,-s*.40); ctx.stroke();
+    ctx.restore();
+  }
+
+  let bikeX = -70;
+
+  function draw(ts) {
+    const t = ts * 0.001;
+    ctx.clearRect(0,0,W(),H());
+    buildField(t);
+    levels.forEach(({v,lw,alpha}) => {
+      const segs = marchingSquares(v);
+      ctx.strokeStyle = `rgba(29,158,117,${alpha})`;
+      ctx.lineWidth = lw; ctx.lineCap = "round";
+      segs.forEach(([p0,p1]) => {
+        const x0=p0[0]/GW*W(), y0=p0[1]/GH*H();
+        const x1=p1[0]/GW*W(), y1=p1[1]/GH*H();
+        ctx.beginPath(); ctx.moveTo(x0,y0); ctx.lineTo(x1,y1); ctx.stroke();
+      });
+    });
+    bikeX += 0.6;
+    if (bikeX > W()+80) bikeX = -70;
+    const by = bikeTrackY(bikeX, t);
+    const dx = 6;
+    const angle = Math.atan2(bikeTrackY(bikeX+dx,t)-bikeTrackY(bikeX-dx,t), dx*2);
+    drawBike(bikeX, by-16, angle);
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
 </script>
 </body>
 </html>
